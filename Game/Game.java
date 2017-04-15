@@ -2,14 +2,14 @@ package Game;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Arrays;
+
 import IO.*;
 
 public class Game {
 
     private Board board;
     private ArrayList<Player> players;
-    private int numRounds;
 
     /**
      * Class constructor
@@ -18,7 +18,6 @@ public class Game {
     public Game() {
         this.board = new Board();
         this.players = new ArrayList<Player>();
-        this.numRounds = 0;
     }
 
     /**
@@ -108,8 +107,7 @@ public class Game {
 
         // Play each move in the file:
         for (int i = 0; i < numMoves; i++) {
-            numRounds += 1.0/numPlayers;    // A round is complete when all players have had a turn
-
+            // Read next line
             line = inputFile.getLine();
 
             if (line.equals("DUMP")) break;
@@ -124,6 +122,9 @@ public class Game {
 
             // Checks if current player is still in the game:
             if (!player.isActive()) continue;
+
+            // Increment number of rounds:
+            player.getStats().addRound();
 
             int boardSize = this.board.getBoardSize();
 
@@ -163,7 +164,7 @@ public class Game {
                             Player owner = this.players.get(ownerId - 1);
                             player.payRent(owner, rent);
                         } else {
-                            player.goBankrupt();
+                            player.goBankrupt(rent);
                         }
                     } 
                     // Property belongs to the bank:
@@ -180,83 +181,72 @@ public class Game {
 
         } /* END for moves */
 
-        this.numRounds = (int) numRounds;
-
     }
 
     public void printStats() {
-        System.out.println("\nprintStats()\n");
-
         DecimalFormat df = new DecimalFormat("##.##");
+        int numPlayers = this.players.size();
+
+        OutputHandler output = new OutputHandler(System.getProperty("user.dir") + "/src/estatisticas.txt");
+        String line;
 
         // Number of rounds:
-        System.out.println("1:" + this.numRounds);
+        int[] playersRounds = new int[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            playersRounds[i] = this.players.get(i).getStats().getNumRounds();
+        }
+        int numRounds = Arrays.stream(playersRounds).max().getAsInt();
+        output.putLine("1:" + numRounds + "\n");
 
         // Number of laps:
-        System.out.print("2:");
-        int numPlayers = this.players.size();
+        line = "2:";
         for (int i = 0; i < numPlayers; i++) {
             int numLaps = this.players.get(i).getStats().getNumLaps();
-            System.out.print((i+1) + "-" + numLaps);
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + numLaps;
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line + "\n");
 
         // Final balance:
-        System.out.print("3:");
+        line = "3:";
         for (int i = 0; i < numPlayers; i++) {
             double finalBalance = this.players.get(i).getBalance();
-            System.out.print((i+1) + "-" + df.format(finalBalance));
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + df.format(finalBalance);
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line + "\n");
 
         // Rent received:
-        System.out.print("4:");
+        line = "4:";
         for (int i = 0; i < numPlayers; i++) {
             double rentIncome = this.players.get(i).getStats().getRentIncome();
-            System.out.print((i+1) + "-" + df.format(rentIncome));
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + df.format(rentIncome);
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line + "\n");
 
         // Rent payed:
-        System.out.print("5:");
+        line = "5:";
         for (int i = 0; i < numPlayers; i++) {
             double rentPayed = this.players.get(i).getStats().getRentExpenses();
-            System.out.print((i+1) + "-" + df.format(rentPayed));
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + df.format(rentPayed);
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line + "\n");
 
         // Properties purchased:
-        System.out.print("6:");
+        line = "6:";
         for (int i = 0; i < numPlayers; i++) {
             double purchaseExpense = this.players.get(i).getStats().getPropertyExpenses();
-            System.out.print((i+1) + "-" + df.format(purchaseExpense));
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + df.format(purchaseExpense);
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line + "\n");
 
         // Number of skips:
-        System.out.print("7:");
+        line = "7:";
         for (int i = 0; i < numPlayers; i++) {
             Player currPlayer = this.players.get(i);
-            System.out.print((i+1) + "-" + currPlayer.getStats().getNumSkips());
-            if (i != numPlayers - 1) System.out.print(";");
-        } System.out.println();
+            line += (i+1) + "-" + currPlayer.getStats().getNumSkips();
+            if (i != numPlayers - 1) line += ";";
+        } output.putLine(line);
 
-        System.out.println();
-//        System.out.println();
-//        System.out.println("numRounds: " + this.numRounds);
-//        int numPlayers = this.players.size();
-//        System.out.println("# Players: " + numPlayers);
-//        for (int i = 0; i < numPlayers; i++) {
-//            Player currPlayer = this.players.get(i);
-//            int laps = currPlayer.getStats().getNumLaps();
-//            double balance = currPlayer.getBalance();
-//            double rentReceived = currPlayer.getStats().getRentIncome();
-//            double rentPaid = currPlayer.getStats().getRentExpenses();
-//            double buy = currPlayer.getStats().getPropertyExpenses();
-//            double skips = currPlayer.getStats().getNumSkips();
-//
-//            int index = i+1;
-//            System.out.println("Player " + index + ": " + laps + " laps | Balance = " + balance + " | Rent received = " + rentReceived + " | Rent paid = " + rentPaid + " | Properties = " + buy + " | Skips = " + skips);
-//        }
+        output.closeFile();
     }
+    
 }

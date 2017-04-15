@@ -3,6 +3,9 @@ package Game;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Created by cgpimenta on 09/04/17.
+ */
 public class Player {
 
     private int id;
@@ -11,13 +14,8 @@ public class Player {
     private PlayerStats stats;
     private boolean active;
     private int currentPosition;
+    int numRounds;
 
-    /**
-     * Class constructor.
-     * Initializes a new player.
-     * @param  id      Player's id.
-     * @param  balance Player's initial balance
-     */
     public Player(int id, double balance) {
         this.id = id;
         this.balance = balance;
@@ -62,8 +60,9 @@ public class Player {
         this.stats.addRentIncome(rent);
     }
 
-    public void goBankrupt() {
+    public void goBankrupt(double debt) {
         this.active = false;
+        this.balance -= debt;
 
         // Return properties to bank (Bank Id = 0):
         for (Property property : this.propertiesList) {

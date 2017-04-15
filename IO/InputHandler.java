@@ -2,10 +2,8 @@ package IO;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
-/**
- * Created by cgpimenta on 09/04/17.
- */
 public class InputHandler {
 
     private String fileName;
@@ -13,11 +11,12 @@ public class InputHandler {
 
     public InputHandler(String fileName){
         this.fileName = fileName;
+
         try {
             FileReader fr = new FileReader(fileName);
             this.br = new BufferedReader(fr);
         }
-        catch(Exception e) {
+        catch(IOException e) {
             e.printStackTrace();
         }
     }
@@ -26,7 +25,7 @@ public class InputHandler {
         try {
             return br.readLine();
         }
-        catch(Exception e) {
+        catch(IOException e) {
             e.printStackTrace();
         }
         return null;

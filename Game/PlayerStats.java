@@ -2,6 +2,7 @@ package Game;
 
 public class PlayerStats {
 
+    private int numRounds;
     private int numLaps;
     private int numSkips;
     private double rentExpenses;
@@ -13,6 +14,7 @@ public class PlayerStats {
      * Initalizes empty player statitics.
      */
     public PlayerStats() {
+        this.numRounds = 0;
         this.numLaps = 0;
         this.numSkips = 0;
         this.rentExpenses = 0.0;
@@ -22,6 +24,10 @@ public class PlayerStats {
 
     public void addLap() {
         this.numLaps++;
+    }
+
+    public void addRound() {
+        this.numRounds++;
     }
 
     public void addSkip() {
@@ -38,6 +44,10 @@ public class PlayerStats {
 
     public void addPropertyExpense(double value) {
         this.propertyExpenses += value;
+    }
+
+    public int getNumRounds() {
+        return this.numRounds;
     }
 
     public int getNumLaps() {
