@@ -14,7 +14,7 @@ public class Monopoly {
         game.play(System.getProperty("user.dir") + "/src/jogadas.txt");
 
         // Save game statistics to file:
-        game.printStats();
+        game.printStats(System.getProperty("user.dir") + "/src/estatisticas.txt");
     }
 
 }

@@ -183,11 +183,11 @@ public class Game {
 
     }
 
-    public void printStats() {
+    public void printStats(String fileName) {
         DecimalFormat df = new DecimalFormat("##.##");
         int numPlayers = this.players.size();
 
-        OutputHandler output = new OutputHandler(System.getProperty("user.dir") + "/src/estatisticas.txt");
+        OutputHandler output = new OutputHandler(fileName);
         String line;
 
         // Number of rounds:
