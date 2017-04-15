@@ -1,8 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Vector;
 
 public class Board {
 

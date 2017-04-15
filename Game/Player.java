@@ -3,9 +3,6 @@ package Game;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by cgpimenta on 09/04/17.
- */
 public class Player {
 
     private int id;
