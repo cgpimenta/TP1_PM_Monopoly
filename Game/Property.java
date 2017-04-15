@@ -1,8 +1,5 @@
 package Game;
 
-/**
- * Created by cgpimenta on 09/04/17.
- */
 public class Property extends BoardPosition {
 
     private double purchaseValue;

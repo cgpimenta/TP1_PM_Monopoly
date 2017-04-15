@@ -1,21 +1,18 @@
 package Game;
 
-/**
- * Created by cgpimenta on 09/04/17.
- */
 public class PlayerStats {
 
-    private int numRounds;
     private int numLaps;
     private int numSkips;
     private double rentExpenses;
     private double rentIncome;
     private double propertyExpenses;
 
-    /* Verificar os métodos necessários */
-
+    /**
+     * Class constructor.
+     * Initalizes empty player statitics.
+     */
     public PlayerStats() {
-        this.numRounds = 0;
         this.numLaps = 0;
         this.numSkips = 0;
         this.rentExpenses = 0.0;
@@ -25,10 +22,6 @@ public class PlayerStats {
 
     public void addLap() {
         this.numLaps++;
-    }
-
-    public void addRound() {
-        this.numRounds++;
     }
 
     public void addSkip() {
@@ -45,10 +38,6 @@ public class PlayerStats {
 
     public void addPropertyExpense(double value) {
         this.propertyExpenses += value;
-    }
-
-    public int getNumRounds() {
-        return this.numRounds;
     }
 
     public int getNumLaps() {
