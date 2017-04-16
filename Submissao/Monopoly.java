@@ -7,13 +7,13 @@ public class Monopoly {
         Game game = new Game();
 
         // Create board according to the input file:
-        game.makeBoard(System.getProperty("user.dir") + "/src/tabuleiro-3.txt");
+        game.makeBoard(System.getProperty("user.dir") + "/tabuleiro.txt");
 
         // Play game according to input file:
-        game.play(System.getProperty("user.dir") + "/src/jogadas-3.txt");
+        game.play(System.getProperty("user.dir") + "/jogadas.txt");
 
         // Save game statistics to file:
-        game.printStats(System.getProperty("user.dir") + "/src/estatisticas-3.txt");
+        game.printStats(System.getProperty("user.dir") + "/estatisticas.txt");
     }
 
 }
