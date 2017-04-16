@@ -30,5 +30,12 @@ public class InputHandler {
         }
         return null;
     }
-
+    
+    public void closeFile() {
+        try {
+            this.br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
