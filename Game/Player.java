@@ -11,7 +11,6 @@ public class Player {
     private PlayerStats stats;
     private boolean active;
     private int currentPosition;
-    int numRounds;
 
     public Player(int id, double balance) {
         this.id = id;
