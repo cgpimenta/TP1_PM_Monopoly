@@ -11,7 +11,7 @@ public class PlayerStats {
 
     /**
      * Class constructor.
-     * Initalizes empty player statitics.
+     * Initializes empty player statistics.
      */
     public PlayerStats() {
         this.numRounds = 0;
